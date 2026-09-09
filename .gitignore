@@ -17,3 +17,5 @@ dist/
 # every product photo, hero slide and gallery tile, and a Vercel deploy would
 # render the whole storefront as SmartImage fallbacks.
 # (public/media/reels/ was never ignored — the asymmetry was accidental.)
+.vercel
+.env*
