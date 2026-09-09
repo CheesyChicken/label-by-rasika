@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.vercel/
+.DS_Store
+
+# Secrets — never commit. IG_ACCESS_TOKEN and ANTHROPIC_API_KEY live here.
+.env
+.env.local
+.env.*.local
+
+# public/media/instagram/ is deliberately NOT ignored.
+#
+# It stopped being a scratch download target: all 436 files under it are now
+# referenced by literal /media/instagram/<code>_N.jpg paths in
+# src/data/products.ts, src/data/instagram.gallery.json and
+# src/data/customerLooks.ts. Ignoring it meant `git add .` silently skipped
+# every product photo, hero slide and gallery tile, and a Vercel deploy would
+# render the whole storefront as SmartImage fallbacks.
+# (public/media/reels/ was never ignored — the asymmetry was accidental.)

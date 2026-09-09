@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Label by Rasika — design tokens
+
+   Colourless chrome: the page is white, the type is near-black, and every
+   saturated pixel comes from the garment photography. The one chromatic
+   accent is spent deliberately — sale badges, a saved wishlist heart,
+   the hover state of a primary button — and nowhere else.
+
+   Every foreground/background pair below is AA-checked against its ground:
+     ink   #14100D on white  18.92:1
+     muted #6B625A on white   5.97:1   (on --bg-soft 5.43:1)
+     white on accent #3A4C68  8.70:1
+   The mid-greys these replace (#9A8C79, #7E766A, #A39B90) all failed at
+   3.28 / 4.48 / 2.75, which is why body copy no longer uses them.
+   ─────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-display: 'Cinzel', serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+    --bg: #ffffff;
+    --bg-soft: #f6f4f0;
+    --ink: #14100d;
+    --ink-soft: #3a322b;
+    --ink-deep: #100e0c;
+    --muted: #6b625a;
+    --line: #e5e1db;
+    --line-strong: #cfc9c1;
+
+    /* Cool, low-chroma ink. Indian ethnic photography is overwhelmingly warm
+       (warm skin, gold zari, dyes from red through mustard to emerald), so a
+       warm accent — terracotta, clay, the old maroon — sits inside the same
+       arc as the merchandise and argues with it. A cool slate sits outside
+       that gamut entirely, so it reads as chrome and never competes.
+       White on it: 8.70:1. */
+    --accent: #3a4c68;
+    --accent-on-dark: #a9bcd8;
+
+    --success: #2f5d4b;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    color: var(--ink);
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    letter-spacing: 0.005em;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  /* Two rings, so the indicator reads on light AND dark surfaces. A single
+     near-black outline measured 1.02:1 in the footer and 1.18:1 in the
+     lightbox — invisible exactly where a keyboard user needs it. */
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+}
+
+/* An underline that grows from the left on hover — the only link flourish. */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover::after,
+.link-underline:focus-visible::after,
+.link-underline.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Horizontal rails hide their scrollbar but stay scrollable. `scrollbar-none`
+   was used in FilterControls without ever being defined, so those rails had no
+   scroll affordance and simply overflowed the page. */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Quiet, thin scrollbar — no gold. */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-soft);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
